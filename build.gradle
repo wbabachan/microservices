@@ -1,0 +1,57 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/java']
+        }
+        resources {
+            srcDirs = ['src/resources']
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+war {
+    webAppDirName = 'src/webapp'
+}
+
+dependencies {
+    compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0.1'
+    compile group: 'org.wso2.msf4j', name: 'msf4j-all', version: '2.0.0'
+}
+
+idea {
+    project {
+        jdkName '1.8'
+        languageLevel '1.8'
+        vcs 'Git'
+    }
+    module {
+        excludeDirs += file('buildSrc')
+        excludeDirs += file('build')
+        excludeDirs += file('gradle')
+        excludeDirs += file('.gradle')
+        excludeDirs += file('.idea')
+        excludeDirs += file('.classpath')
+        excludeDirs += file('.project')
+        excludeDirs += file('gradlew')
+        excludeDirs += file('gradlew.bat')
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.1'
+}
+
